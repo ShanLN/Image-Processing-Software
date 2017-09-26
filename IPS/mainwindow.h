@@ -25,9 +25,12 @@ private:
 	QAction *saveAsAction;
 	QAction *exitAction;
 
+	QAction *aboutAction;
+
 
 	QMenu *fileMenu;
 	QMenu *editMenu;
+	QMenu *aboutMenu;
 
 	QToolBar *fileToolBar;
 	QToolBar *editToolBar;

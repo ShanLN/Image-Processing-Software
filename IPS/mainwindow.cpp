@@ -4,15 +4,24 @@
 #include <qmenubar.h>
 #include <qtoolbar.h>
 #include <qstatusbar.h>
+#include <qfiledialog.h>
+#include <qmdisubwindow.h>
+
+#include "Imageview.h"
 
 IPSMainwindow::IPSMainwindow(QWidget *parent)
 	: QMainWindow(parent)
 {
-	setup();
 	setWindowTitle("IPS");
 	setWindowIcon(QIcon("./Images/Icon/46.png"));
+	setup();
+	m_mdiarea = new QMdiArea();
+	m_mdiarea->setViewMode(QMdiArea::TabbedView);
+	m_mdiarea->setTabsClosable(true);
+	m_mdiarea->setTabsMovable(true);
+	setCentralWidget(m_mdiarea);
+
 	showMaximized();
-	
 }
 
 IPSMainwindow::~IPSMainwindow()
@@ -25,6 +34,7 @@ void IPSMainwindow::setup()
 	openAction = new QAction("open", this);
 	openAction->setIcon(QIcon("./Images/Icon/35.png"));
 	openAction->setStatusTip("open an image.");
+	connect(openAction, &QAction::triggered, this, &IPSMainwindow::slot_openFile);
 	
 	saveAction = new QAction("save", this);
 	saveAction->setIcon(QIcon("./Images/Icon/34.png"));
@@ -66,4 +76,27 @@ void IPSMainwindow::setup()
 
 	editToolBar = addToolBar("edit");
 
+}
+
+
+void IPSMainwindow::slot_openFile()
+{
+	QString img_path = QFileDialog::getOpenFileName(this, tr("open an image."), ".",
+		                                           tr("Images (*.jpg *.png *.bmp)"));
+
+	QImage *src_img = new QImage(img_path);
+
+	if (src_img == NULL)
+		return;
+
+	Imageview *imgview = new Imageview();
+	imgview->setImage(src_img);
+
+	QMdiSubWindow *subWindow = new QMdiSubWindow();
+	subWindow->setWidget(imgview);
+	subWindow->setAttribute(Qt::WA_DeleteOnClose);
+
+	m_mdiarea->addSubWindow(subWindow);
+	//QMdiSubWindow *subWindow1 = m_mdiarea->addSubWindow(imgview);
+	//subWindow1->showMaximized();
 }

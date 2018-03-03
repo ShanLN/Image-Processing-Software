@@ -6,6 +6,7 @@
 #include <QMenu>
 #include <QToolBar>
 #include <QStatusBar>
+#include <qmdiarea.h>
 
 
 class IPSMainwindow : public QMainWindow
@@ -34,6 +35,12 @@ private:
 
 	QToolBar *fileToolBar;
 	QToolBar *editToolBar;
+
+	QMdiArea *m_mdiarea;
+
+private slots:
+    void slot_openFile();
+
 
 };
 

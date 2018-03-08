@@ -4,6 +4,7 @@
 #include <qgraphicsitem.h>
 #include <qgraphicsview.h>
 #include <qgraphicsscene.h>
+#include <qevent.h>
 
 class BasicImageview: public QGraphicsView
 {
@@ -12,12 +13,20 @@ public:
 	BasicImageview(QWidget *parent = 0);
 	~BasicImageview();
 
-	void setImage(const QImage *QImg);
+	void setImage(QImage *QImg);
+
+protected:
+	void wheelEvent(QWheelEvent *event);
 
 private:
+	void scaleImage();
 	QGraphicsScene *m_scene;
-	QGraphicsPixmapItem *m_image;
+	QGraphicsPixmapItem *m_pixmapItem;
+	QImage *m_image;
 
+	double m_scaleRate;
+	QPoint m_mousePoint;
+	QPoint m_scrollPoint;
 };
 
 

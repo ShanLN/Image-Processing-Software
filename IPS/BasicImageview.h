@@ -13,7 +13,7 @@ public:
 	BasicImageview(QWidget *parent = 0);
 	~BasicImageview();
 
-	void setImage(QImage *QImg);
+	void setQImage(QImage *QImg);
 
 protected:
 	void wheelEvent(QWheelEvent *event);

@@ -2,6 +2,7 @@
 #define IMAGEVIEW_H
 
 #include "BasicImageview.h"
+#include "CImage.h"
 
 class Imageview: public BasicImageview
 {
@@ -9,8 +10,10 @@ class Imageview: public BasicImageview
 public:
 	Imageview(QWidget *parent = 0);
 	~Imageview();
+	void setImage(CImage *srcImg);
 
 private:
+	
 
 };
 

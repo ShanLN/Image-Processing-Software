@@ -8,6 +8,8 @@
 #include <QStatusBar>
 #include <qmdiarea.h>
 
+#include "ThreadIO.h"
+
 
 class IPSMainwindow : public QMainWindow
 {
@@ -38,8 +40,12 @@ private:
 
 	QMdiArea *m_mdiarea;
 
+	ThreadIO *m_threadIO;
+
+
 private slots:
     void slot_openFile();
+	void slot_threadIO();
 
 
 };

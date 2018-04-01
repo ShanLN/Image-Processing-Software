@@ -10,14 +10,12 @@ Implemented by Kealen @2017.9.27
 
 CImage::CImage()
 {
-	m_image = new cv::Mat();
 
 }
 
 CImage::CImage(const cv::Mat &srcMat)
 {
-	cv::Mat tempMat = srcMat;
-	m_image = &tempMat;
+	m_image = srcMat.clone();
 }
 
 CImage::CImage(const int &numRow, const int &numCol, const int &numChannel, unsigned char *pData)
@@ -25,9 +23,9 @@ CImage::CImage(const int &numRow, const int &numCol, const int &numChannel, unsi
 	if (pData == NULL)
 		return;
 	if (numChannel == 1)
-		m_image = new cv::Mat(numRow, numCol, CV_8UC1,pData);
+		m_image = cv::Mat(numRow, numCol, CV_8UC1,pData);
 	if (numChannel == 3)
-		m_image = new cv::Mat(numRow, numCol, CV_8UC3,pData);
+		m_image = cv::Mat(numRow, numCol, CV_8UC3,pData);
 	else
 		return;
 }
@@ -52,6 +50,6 @@ double CImage::getStd(){
 	return m_std;
 }
 
-cv::Mat *CImage::getMat(){
+cv::Mat CImage::getMat(){
 	return m_image;
 }

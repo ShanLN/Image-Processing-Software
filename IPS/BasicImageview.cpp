@@ -20,7 +20,7 @@ BasicImageview::~BasicImageview()
 
 }
 
-void BasicImageview::setImage(QImage *QImg)
+void BasicImageview::setQImage(QImage *QImg)
 {
 	if (QImg == NULL)
 		return;

@@ -71,6 +71,15 @@
     <ClCompile Include="Imageview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_ThreadIO.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_ThreadIO.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadIO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="ips.ui">
@@ -86,6 +95,9 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="Imageview.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ThreadIO.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

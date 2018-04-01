@@ -14,10 +14,10 @@ public:
 
 	double getMean();
 	double getStd();
-	cv::Mat *getMat();
+	cv::Mat getMat();
 
 private:
-	cv::Mat *m_image;
+	cv::Mat m_image;
 	double m_mean;
 	double m_std;
 };

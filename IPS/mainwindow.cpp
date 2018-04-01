@@ -22,6 +22,9 @@ IPSMainwindow::IPSMainwindow(QWidget *parent)
 	setCentralWidget(m_mdiarea);
 
 	showMaximized();
+
+	m_threadIO = new ThreadIO();
+	connect(m_threadIO, &ThreadIO::signal_threadEnd, this, &IPSMainwindow::slot_threadIO);
 }
 
 IPSMainwindow::~IPSMainwindow()
@@ -84,19 +87,27 @@ void IPSMainwindow::slot_openFile()
 	QString img_path = QFileDialog::getOpenFileName(this, tr("open an image."), ".",
 		                                           tr("Images (*.jpg *.png *.bmp)"));
 
-	QImage *src_img = new QImage(img_path);
+	m_threadIO->toDoOpenFile(img_path);
+}
 
-	if (src_img == NULL)
+void IPSMainwindow::slot_threadIO()
+{
+	QVector<CImage*> imgVec = m_threadIO->getImage();
+	if (imgVec.empty())
 		return;
 
-	Imageview *imgview = new Imageview();
-	imgview->setImage(src_img);
+	for (int i = 0; i < imgVec.size(); ++i)
+	{
+		CImage *tempCImg = imgVec.at(i);
 
-	QMdiSubWindow *subWindow = new QMdiSubWindow();
-	subWindow->setWidget(imgview);
-	subWindow->setAttribute(Qt::WA_DeleteOnClose);
+		Imageview *imgview = new Imageview();
+		imgview->setImage(tempCImg);
 
-	m_mdiarea->addSubWindow(subWindow);
-	//QMdiSubWindow *subWindow1 = m_mdiarea->addSubWindow(imgview);
-	//subWindow1->showMaximized();
+		QMdiSubWindow *subWindow = new QMdiSubWindow();
+		subWindow->setWidget(imgview);
+		subWindow->setAttribute(Qt::WA_DeleteOnClose);
+
+		m_mdiarea->addSubWindow(subWindow);
+	}
+
 }

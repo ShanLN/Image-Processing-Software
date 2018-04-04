@@ -109,5 +109,4 @@ void IPSMainwindow::slot_threadIO()
 
 		m_mdiarea->addSubWindow(subWindow);
 	}
-
 }

@@ -4,7 +4,6 @@
 
 ThreadIO::ThreadIO()
 {
-	
 	m_CImgVec.clear();
 }
 
@@ -35,6 +34,7 @@ void ThreadIO::toDoSaveFile(QString imgPath)
 void ThreadIO::run()
 {
 	emit signal_threadBegin();
+	m_CImgVec.clear();
 
 	switch (m_flag)
 	{
@@ -55,7 +55,7 @@ void ThreadIO::run()
 void ThreadIO::doOpenFile()
 {
 	std::string imgPath = m_imgPath.toStdString();
-	cv::Mat srcMat = cv::imread(imgPath);
+	cv::Mat srcMat = cv::imread(imgPath, cv::IMREAD_ANYCOLOR);   // the second parameter is needed for gray image.
 	if (srcMat.empty())
 		return;
 

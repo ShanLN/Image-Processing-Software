@@ -21,6 +21,10 @@ IPSMainwindow::IPSMainwindow(QWidget *parent)
 	m_mdiarea->setTabsMovable(true);
 	setCentralWidget(m_mdiarea);
 
+	m_dockImgInfo = new DockImgInfo(this);
+	m_dockImgInfo->setAllowedAreas(Qt::LeftDockWidgetArea| Qt::RightDockWidgetArea);
+	addDockWidget(Qt::LeftDockWidgetArea, m_dockImgInfo);
+
 	showMaximized();
 
 	m_threadIO = new ThreadIO();

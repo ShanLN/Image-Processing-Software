@@ -9,6 +9,7 @@
 #include <qmdiarea.h>
 
 #include "ThreadIO.h"
+#include "DockImgInfo.h"
 
 
 class IPSMainwindow : public QMainWindow
@@ -41,6 +42,7 @@ private:
 	QMdiArea *m_mdiarea;
 
 	ThreadIO *m_threadIO;
+	DockImgInfo *m_dockImgInfo;
 
 
 private slots:

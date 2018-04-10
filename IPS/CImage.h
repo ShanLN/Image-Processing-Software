@@ -15,11 +15,17 @@ public:
 	double getMean();
 	double getStd();
 	cv::Mat getMat();
+	void setImgPath(std::string imgPath);
+	std::string getImgPath();
+
+	void evaluateImg();
 
 private:
 	cv::Mat m_image;
 	double m_mean;
 	double m_std;
+	std::string m_imgPath;
+	bool m_evaFlag;
 };
 
 

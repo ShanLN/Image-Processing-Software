@@ -60,6 +60,7 @@ void ThreadIO::doOpenFile()
 		return;
 
 	CImage *srcCImg = new CImage(srcMat);
+	srcCImg->setImgPath(imgPath);
 	
 	m_CImgVec.push_back(srcCImg);
 }

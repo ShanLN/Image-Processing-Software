@@ -11,6 +11,7 @@
 
 IPSMainwindow::IPSMainwindow(QWidget *parent)
 	: QMainWindow(parent)
+	, m_currSubWindow(0)
 {
 	setWindowTitle("IPS");
 	setWindowIcon(QIcon("./Images/Icon/46.png"));
@@ -20,6 +21,7 @@ IPSMainwindow::IPSMainwindow(QWidget *parent)
 	m_mdiarea->setTabsClosable(true);
 	m_mdiarea->setTabsMovable(true);
 	setCentralWidget(m_mdiarea);
+	connect(m_mdiarea, &QMdiArea::subWindowActivated, this, &IPSMainwindow::slot_activateChanged);
 
 	m_dockImgInfo = new DockImgInfo(this);
 	m_dockImgInfo->setAllowedAreas(Qt::LeftDockWidgetArea| Qt::RightDockWidgetArea);
@@ -85,6 +87,43 @@ void IPSMainwindow::setup()
 
 }
 
+Imageview *IPSMainwindow::getCurrentView()
+{
+	if (m_currSubWindow != NULL)
+	{
+		Imageview *currentView = static_cast<Imageview*>(m_currSubWindow->widget());
+		return currentView;
+	}
+	else
+		return NULL;
+}
+
+void IPSMainwindow::setImgInfo()
+{
+	//set the image information.
+	Imageview *currentView = getCurrentView();
+	if (currentView != NULL)
+	{
+		CImage *currCImg = currentView->getCImg();
+
+		QStringList imgname;
+		QString currImgPath = currCImg->getImgPath().c_str();
+		QFileInfo fileInfo = QFileInfo(currImgPath);
+		imgname.push_back(fileInfo.absoluteFilePath());
+		imgname.push_back(fileInfo.completeBaseName());
+
+		double imageInfo[2];
+		imageInfo[0] = currCImg->getMean();
+		imageInfo[1] = currCImg->getStd();
+
+		m_dockImgInfo->setImgInfo(0, imageInfo, imgname);
+	}
+	else
+	{
+		m_dockImgInfo->setImgInfo(-1);
+	}
+}
+
 
 void IPSMainwindow::slot_openFile()
 {
@@ -92,7 +131,9 @@ void IPSMainwindow::slot_openFile()
 		                                           tr("Images (*.jpg *.png *.bmp)"));
 
 	m_threadIO->toDoOpenFile(img_path);
+	m_pathVec.push_back(img_path);
 }
+
 
 void IPSMainwindow::slot_threadIO()
 {
@@ -113,4 +154,15 @@ void IPSMainwindow::slot_threadIO()
 
 		m_mdiarea->addSubWindow(subWindow);
 	}
+}
+
+
+void IPSMainwindow::slot_activateChanged(QMdiSubWindow *subWindow)
+{
+	if (subWindow != m_currSubWindow)
+	{
+		m_currSubWindow = subWindow;
+	}
+
+	setImgInfo();
 }

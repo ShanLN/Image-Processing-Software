@@ -11,9 +11,13 @@ public:
 	DockImgInfo(QWidget *parent = 0);
 	~DockImgInfo();
 
+	void setImgInfo(const int &flag, double *data =NULL, QStringList list = QStringList(QString()));
 
 private:
 	void setup();
+	void clearData();
+	void setGeneralSec(QStringList list);
+	void setImageSec(double *data);
 
 	QTreeWidget *m_treeWidget;
 	QTreeWidgetItem *m_HeadItemGeneral;

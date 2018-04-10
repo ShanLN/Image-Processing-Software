@@ -4,6 +4,7 @@ DockImgInfo::DockImgInfo(QWidget *parent)
 	:QDockWidget(parent)
 {
 	setup();
+	setImgInfo(-1);
 }
 
 DockImgInfo::~DockImgInfo()
@@ -51,4 +52,45 @@ void DockImgInfo::setup()
 
 	m_treeWidget->expandAll();
 	setWidget(m_treeWidget);
+}
+
+void DockImgInfo::clearData()
+{
+	m_ItemImgPath->setText(2, QString("-"));
+	m_ItemImgName->setText(2, QString("-"));
+
+	m_ItemMean->setText(2, QString("-"));
+	m_ItemStd->setText(2, QString("-"));
+}
+
+void DockImgInfo::setGeneralSec(QStringList list)
+{
+	m_ItemImgPath->setText(2, list.at(0));
+	m_ItemImgName->setText(2, list.at(1));
+}
+void DockImgInfo::setImageSec(double *data)
+{
+	m_ItemMean->setText(2, QString("%1").arg(data[0]));
+	m_ItemStd->setText(2, QString("%1").arg(data[1]));
+}
+
+
+void DockImgInfo::setImgInfo(const int &flag, double *data, QStringList list)
+{
+	if (flag == -1)
+		clearData();
+
+	switch (flag)
+	{
+	case 1:
+		setGeneralSec(list);
+		break;
+	case 2:
+		setImageSec(data);
+		break;
+	case 0:
+		setGeneralSec(list);
+		setImageSec(data);
+		break;
+	}
 }

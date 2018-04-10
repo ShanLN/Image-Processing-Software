@@ -11,9 +11,10 @@ public:
 	Imageview(QWidget *parent = 0);
 	~Imageview();
 	void setImage(CImage *srcImg);
+	CImage *getCImg();
 
 private:
-	
+	CImage *m_CImg;
 
 };
 

@@ -10,6 +10,7 @@
 
 #include "ThreadIO.h"
 #include "DockImgInfo.h"
+#include "Imageview.h"
 
 
 class IPSMainwindow : public QMainWindow
@@ -22,6 +23,8 @@ public:
 
 private:
 	void setup();
+	Imageview *getCurrentView();
+	void setImgInfo();
 
 private:
 	QAction *openAction;
@@ -44,11 +47,15 @@ private:
 	ThreadIO *m_threadIO;
 	DockImgInfo *m_dockImgInfo;
 
+	QVector<QString> m_pathVec;
+	QVector<CImage*> m_imgVec;
+
+	QMdiSubWindow *m_currSubWindow;
 
 private slots:
     void slot_openFile();
 	void slot_threadIO();
-
+	void slot_activateChanged(QMdiSubWindow *subWindow);
 
 };
 

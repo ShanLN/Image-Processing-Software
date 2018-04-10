@@ -2,6 +2,7 @@
 
 Imageview::Imageview(QWidget *parent)
 	:BasicImageview(parent)
+	,m_CImg(0)
 {
 	
 }
@@ -12,6 +13,7 @@ Imageview::~Imageview()
 
 void Imageview::setImage(CImage *srcImg)
 {
+	m_CImg = srcImg;
 	cv::Mat srcMat = srcImg->getMat();
 	QImage *tempQImg = 0;
 	if (srcMat.type() == CV_8UC1)
@@ -29,4 +31,9 @@ void Imageview::setImage(CImage *srcImg)
 		return;
 
 	setQImage(tempQImg);
+}
+
+CImage *Imageview::getCImg()
+{
+	return m_CImg;
 }
